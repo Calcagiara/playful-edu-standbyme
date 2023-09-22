@@ -14,6 +14,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.support.CronTrigger;
@@ -78,6 +79,12 @@ public class StandByMeService implements ApplicationListener<ContextRefreshedEve
     			result.add(ed);
     		}
     		logger.info("getEducators:" + result.size());
+    		HttpEntity<List<Educator>> request = new HttpEntity<>(result, createHeaders());
+    		String url = playfulEndpoint+ "/ext/int/educators?domainId=" + domainId;
+    		res = restTemplate.postForEntity(url, request, String.class);
+    		if (!res.getStatusCode().is2xxSuccessful()) {
+    			logger.error(String.format("getEducators:[%s] %s", res.getStatusCode(), res.getBody()));
+    		}    		
 		} catch (Exception e) {
 			logger.error(String.format("getEducators:%s", e.getMessage()));
 		}
@@ -104,6 +111,12 @@ public class StandByMeService implements ApplicationListener<ContextRefreshedEve
     			result.add(l);
     		}
     		logger.info("getLearners:" + result.size());
+    		HttpEntity<List<Learner>> request = new HttpEntity<>(result, createHeaders());
+    		String url = playfulEndpoint+ "/ext/int/learners?domainId=" + domainId;
+    		res = restTemplate.postForEntity(url, request, String.class);
+    		if (!res.getStatusCode().is2xxSuccessful()) {
+    			logger.error(String.format("getLearners:[%s] %s", res.getStatusCode(), res.getBody()));
+    		}    		    		
 		} catch (Exception e) {
 			logger.error(String.format("getLearners:%s", e.getMessage()));
 		}
@@ -137,6 +150,12 @@ public class StandByMeService implements ApplicationListener<ContextRefreshedEve
     			result.add(g);
     		}
     		logger.info("getGroups:" + result.size());
+    		HttpEntity<List<Group>> request = new HttpEntity<>(result, createHeaders());
+    		String url = playfulEndpoint+ "/ext/int/groups?domainId=" + domainId;
+    		res = restTemplate.postForEntity(url, request, String.class);
+    		if (!res.getStatusCode().is2xxSuccessful()) {
+    			logger.error(String.format("getGroups:[%s] %s", res.getStatusCode(), res.getBody()));
+    		}    		    		    		
 		} catch (Exception e) {
 			logger.error(String.format("getGroups:%s", e.getMessage()));
 		}    	
@@ -172,6 +191,12 @@ public class StandByMeService implements ApplicationListener<ContextRefreshedEve
         		result.add(act);
     		}
     		logger.info("getActivities:" + result.size());
+    		HttpEntity<List<ExternalActivity>> request = new HttpEntity<>(result, createHeaders());
+    		String url = playfulEndpoint+ "/ext/int/activities?domainId=" + domainId;
+    		res = restTemplate.postForEntity(url, request, String.class);
+    		if (!res.getStatusCode().is2xxSuccessful()) {
+    			logger.error(String.format("getActivities:[%s] %s", res.getStatusCode(), res.getBody()));
+    		}    		    		    		
 		} catch (Exception e) {
 			logger.error(String.format("getActivities:%s", e.getMessage()));
 		}
@@ -192,7 +217,8 @@ public class StandByMeService implements ApplicationListener<ContextRefreshedEve
     
 	HttpHeaders createHeaders() {
 		HttpHeaders headers = new HttpHeaders();
-		headers.set("Accept", "application/json");
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 		return headers;
 	}
 
