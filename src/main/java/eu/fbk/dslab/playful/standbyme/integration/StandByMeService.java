@@ -64,6 +64,7 @@ public class StandByMeService implements ApplicationListener<ContextRefreshedEve
     public void getEducators(String domainId) {
     	String address = sbmEndpoint + "/educators";
     	try {
+        	logger.info("getEducators:" + domainId);
     		ResponseEntity<String> res = restTemplate.exchange(address, HttpMethod.GET, 
     				new HttpEntity<Object>(null, createHeaders(false)), String.class);
     		if (!res.getStatusCode().is2xxSuccessful()) {
@@ -96,6 +97,7 @@ public class StandByMeService implements ApplicationListener<ContextRefreshedEve
     public void getLearners(String domainId) {
     	String address = sbmEndpoint + "/learners";
     	try {
+        	logger.info("getLearners:" + domainId);
     		ResponseEntity<String> res = restTemplate.exchange(address, HttpMethod.GET, 
     				new HttpEntity<Object>(null, createHeaders(false)), String.class);
     		if (!res.getStatusCode().is2xxSuccessful()) {
@@ -128,6 +130,7 @@ public class StandByMeService implements ApplicationListener<ContextRefreshedEve
     public void getGroups(String domainId) {
     	String address = sbmEndpoint + "/groups";
     	try {
+        	logger.info("getGroups:" + domainId);
     		ResponseEntity<String> res = restTemplate.exchange(address, HttpMethod.GET, 
     				new HttpEntity<Object>(null, createHeaders(false)), String.class);
     		if (!res.getStatusCode().is2xxSuccessful()) {
@@ -167,6 +170,7 @@ public class StandByMeService implements ApplicationListener<ContextRefreshedEve
     public void getActivities(String domainId) {
     	String address = sbmEndpoint + "/activities";
     	try {
+        	logger.info("getActivities:" + domainId);
     		ResponseEntity<String> res = restTemplate.exchange(address, HttpMethod.GET, 
     				new HttpEntity<Object>(null, createHeaders(false)), String.class);
     		if (!res.getStatusCode().is2xxSuccessful()) {
