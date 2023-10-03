@@ -19,7 +19,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -189,12 +188,13 @@ public class StandByMeService implements ApplicationListener<ContextRefreshedEve
     			act.setLanguage(getField(node, "language"));
     			act.setExtUrl(getField(node, "url"));
     			act.setType(Type.individual);
-    			String groupAct = getField(node, "group");
+    			//no group activities for now
+    			/*String groupAct = getField(node, "group");
     			if(StringUtils.hasText(groupAct)) {
     				if(groupAct.equals("yes")) {
     					act.setType(Type.group);
     				}
-    			}
+    			}*/
         		result.add(act);
     		}
     		logger.info("getActivities:" + result.size());
